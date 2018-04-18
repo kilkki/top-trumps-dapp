@@ -3,21 +3,23 @@ pragma solidity ^0.4.16;
 contract CardFactory {
     struct Card {
         string name;
-        uint8 topSpeed;        
-        uint8 noOfSylinders;
-        uint8 maxPower;
+        uint topSpeed;        
+        uint noOfSylinders;
+        uint maxPower;
     }
 
     mapping (uint => address) public cardToOwner;
     mapping (address => uint) public ownerCardCount;
     mapping (address => string) public playerName;
+    mapping (address => uint) public playerId;
+    mapping (uint => address) public playerIdToAddress;
 
     address[] public players;
     Card[] public cards;
 
     uint randNonce = 0;
 
-  function createCard(string _name, uint8 _topSpeed, uint8 _noOfSylinders, uint8 _maxPower) public {
+  function createCard(string _name, uint _topSpeed, uint _noOfSylinders, uint _maxPower) public {
       uint id = cards.push(Card(_name, _topSpeed, _noOfSylinders, _maxPower)) - 1;
       cardToOwner[id] = msg.sender;
       ownerCardCount[msg.sender]++;
@@ -40,12 +42,14 @@ contract CardFactory {
   }
 
   function register(string _name) public {	
+      playerId[msg.sender] = players.length;
+      playerIdToAddress[players.length] = msg.sender;
 	    players.push(msg.sender);
       playerName[msg.sender] = _name;
       
-      createCard("Name1", randMod(100), randMod(100), randMod(100));
-      createCard("name2", randMod(100), randMod(100), randMod(100));
-      createCard("name3", randMod(100), randMod(100), randMod(100));
+      createCard("Name1", randMod(350), randMod(36), randMod(1000));
+      createCard("name2", randMod(350), randMod(36), randMod(1000));
+      createCard("name3", randMod(350), randMod(36), randMod(1000));
 	}
 
     // Retrieving the players
@@ -64,9 +68,9 @@ contract CardFactory {
 	//  return players;
 //	}
 
-  function randMod(uint8 _modulus) internal returns(uint8) {
+  function randMod(uint _modulus) internal returns(uint) {
     randNonce++;
-    return uint8(keccak256(now, msg.sender, randNonce)) % _modulus;
+    return uint(keccak256(now, msg.sender, randNonce)) % _modulus;
   }
 
   function getCardsByOwner(address _owner) external view returns(uint[]) {
@@ -140,7 +144,7 @@ contract CardFactory {
     return result;
   }
 
-  event PlayResult(bool iWon, uint winnerCardId, uint loserCardId);
+  event PlayResult(bool iWon, uint winnerCardId, uint loserCardId, uint playAttribute);
 
    function playCard2(address _opponent, uint _playAttribute) external {
     require(_playAttribute == 1 || _playAttribute == 2 || _playAttribute == 3);
@@ -148,7 +152,7 @@ contract CardFactory {
     uint[] memory myCards = _getCardsByOwner(msg.sender);
     uint[] memory opponentCards = _getCardsByOwner(_opponent);
 
-    uint myCardId = myCards[0];
+    uint myCardId = myCards[randMod(uint8(myCards.length) - 1)];
     uint opponentCardId = opponentCards[randMod(uint8(opponentCards.length) - 1)];
 
     Card storage myCard = cards[myCardId];
@@ -175,13 +179,13 @@ contract CardFactory {
 
       ownerCardCount[msg.sender]++;
       ownerCardCount[tmp]--;
-      PlayResult(true, myCardId, opponentCardId);
+      PlayResult(true, myCardId, opponentCardId, _playAttribute);
     } else {
        address newOwner = _opponent; //cardToOwner[myCardId];
        cardToOwner[myCardId] = newOwner;
        ownerCardCount[newOwner]++;
        ownerCardCount[msg.sender]--;
-       PlayResult(false, myCardId, opponentCardId);
+       PlayResult(false, myCardId, opponentCardId, _playAttribute);
     }
   }
 }

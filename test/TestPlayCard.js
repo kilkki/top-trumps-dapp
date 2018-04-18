@@ -1,7 +1,6 @@
 var CardFactory = artifacts.require("./CardFactory.sol");
 
 contract('CardFactory', async (accounts) => {
-
     it("Should create 3 cards in register. Registers 2 players", async () => {
         var name1 = "Name1";
         var name2 = "Name2";
@@ -28,6 +27,17 @@ contract('CardFactory', async (accounts) => {
 
         assert.equal(player1Name, name1);
         assert.equal(player2Name, name2);
+
+        assert.equal(0, await instance.playerId(accounts[0]));
+        assert.equal(1, await instance.playerId(accounts[1]));
+
+        assert.equal(accounts[0], await instance.playerIdToAddress.call(0));
+        assert.equal(accounts[1], await instance.playerIdToAddress.call(1));
+
+        let players =  await instance.getPlayers.call({ from: accounts[0] });
+        assert.equal(2, players.length);
+        
+        
 
         // let card1 = x[0];
         // let card2 = x2[0];
@@ -161,13 +171,19 @@ contract('CardFactory', async (accounts) => {
         // console.log("p2:");
         // console.log(cardsPlayer2);
 
+        let myCount = 3;
+        let opponentCount = 3;
+
         if (iWon) {
-            assert.equal(cardsPlayer1.length, 4);
-            assert.equal(cardsPlayer2.length, 2);
+            myCount++;
+            opponentCount--;        
         } else {
-            assert.equal(cardsPlayer1.length, 2);
-            assert.equal(cardsPlayer2.length, 4);
+            myCount--
+            opponentCount++;            
         }
+
+        assert.equal(cardsPlayer1.length, myCount);
+        assert.equal(cardsPlayer2.length, opponentCount);
 
         // Play other card
         result = await instance.playCard2(accounts[1], 1, { from: accounts[0] }); //.then(function(result) {            
@@ -192,12 +208,15 @@ contract('CardFactory', async (accounts) => {
         cardsPlayer2 = await instance.getCardsByOwner(accounts[1]);
 
         if (iWon) {
-            assert.equal(cardsPlayer1.length, 5);
-            assert.equal(cardsPlayer2.length, 1);
+            myCount++;
+            opponentCount--;        
         } else {
-            assert.equal(cardsPlayer1.length, 1);
-            assert.equal(cardsPlayer2.length, 5);
+            myCount--
+            opponentCount++;            
         }
+
+        assert.equal(cardsPlayer1.length, myCount);
+        assert.equal(cardsPlayer2.length, opponentCount);
 
         // console.log("****");
 

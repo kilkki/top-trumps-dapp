@@ -16,26 +16,23 @@
 
 <body>
     <div class="container">
-        <div id="register_element" class="row">
-            <div class="col-sm">
-                <h1>Register as a player</h1>
+        <div id="register_element" class="row justify-content-center">
+            <div class="col-sm-6">
+                <h1>My cards</h1>
+                <div id="my_cards_holder">
 
-                <div class="form-group">
-                    <label for="nameInput">Name</label>
-                    <input type="text" class="form-control" id="nameInput" aria-describedby="emailHelp" placeholder="Enter your name">
-                    <small id="emailHelp" class="form-text text-muted">Enter a name you want to use as your player name.</small>
                 </div>
-                <button class="btn btn-primary" onclick="register()">Register</a>
+
+              
             </div>
         </div>
 
-    <div id="user_has_registered_element" class="row">
+    <div class="row">
         <div class="col-sm">
-            <p>You have already registerd as a player!</p>
             <button class="btn btn-info" onclick="back()">Back</button>
         </div>
-
     </div>
+    <div class="spacer"></div>
 </div>
 
     <div id="loader" class="loading"></div>
@@ -47,7 +44,7 @@
         crossorigin="anonymous"></script>
     <script src="js/truffle-contract.js"></script>
     <script src="js/web3.min.js"></script>
-    <script src="js/register.js"></script>
+    <script src="js/mycards.js"></script>
     <script type="text/javascript" src="js/ethereumjs-testrpc.js"></script>
     <script type="text/javascript" src="js/ethjs.js"></script>
 </body>
