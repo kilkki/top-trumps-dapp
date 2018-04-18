@@ -80,6 +80,7 @@ var getAccounts = function () {
 var getCardHtml = function (cardData) {
     return `
     <div class="card w-40">
+    <img class="card-img-top" src="images/` + cardData[4] + `.jpg">
     <div class="card-body">
       <h5 class="card-title">` + cardData[0] + `</h5>      
       <p class="card-text">Values</p>
@@ -97,6 +98,7 @@ var getCardHtml = function (cardData) {
 var getCardHtmlResult = function (cardData, index) {
     return `
     <div class="card w-40">
+    <img class="card-img-top" src="images/` + cardData[4] + `.jpg">
     <div class="card-body">
       <h5 class="card-title">` + cardData[0] + `</h5>      
       <p class="card-text">Values</p>

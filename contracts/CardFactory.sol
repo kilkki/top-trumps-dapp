@@ -6,6 +6,7 @@ contract CardFactory {
         uint topSpeed;        
         uint noOfSylinders;
         uint maxPower;
+        uint image;
     }
 
     mapping (uint => address) public cardToOwner;
@@ -20,7 +21,7 @@ contract CardFactory {
     uint randNonce = 0;
 
   function createCard(string _name, uint _topSpeed, uint _noOfSylinders, uint _maxPower) public {
-      uint id = cards.push(Card(_name, _topSpeed, _noOfSylinders, _maxPower)) - 1;
+      uint id = cards.push(Card(_name, _topSpeed, _noOfSylinders, _maxPower, randMod(3))) - 1;
       cardToOwner[id] = msg.sender;
       ownerCardCount[msg.sender]++;
   }
@@ -57,10 +58,10 @@ contract CardFactory {
 	  return players;
 	}
 
-  function getCardDetails(uint _cardId) public view returns (string, uint, uint, uint) {
+  function getCardDetails(uint _cardId) public view returns (string, uint, uint, uint, uint) {
     Card memory cardToReturn = cards[_cardId];
     
-    return (cardToReturn.name, cardToReturn.topSpeed, cardToReturn.noOfSylinders, cardToReturn.maxPower);
+    return (cardToReturn.name, cardToReturn.topSpeed, cardToReturn.noOfSylinders, cardToReturn.maxPower, cardToReturn.image);
   }
 
     // Retrieving the players

@@ -79,6 +79,8 @@ var getMyCards = function () {
 var getCardHtmlResult = function (cardData) {
     return `
     <div class="card w-40">
+    <img class="card-img-top" src="images/` + cardData[4] + `.jpg">
+
     <div class="card-body">
       <h5 class="card-title">` + cardData[0] + `</h5>      
       <p class="card-text">Values</p>
