@@ -97,7 +97,7 @@ contract('CardFactory', async (accounts) => {
         assert.equal(cardsPlayer1.length, 3);
 
         let card1Details = await instance.getCardDetails(cardsPlayer1[0]);      
-        assert.isString(card1Details[0]);
+        assert.isNumber(parseInt(card1Details[0]));
         assert.isNumber(parseInt(card1Details[1]));
         assert.isNumber(parseInt(card1Details[2]));
         assert.isNumber(parseInt(card1Details[3]));

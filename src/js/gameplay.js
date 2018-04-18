@@ -82,7 +82,7 @@ var getCardHtml = function (cardData) {
     <div class="card w-40">
     <img class="card-img-top" src="images/` + cardData[4] + `.jpg">
     <div class="card-body">
-      <h5 class="card-title">` + cardData[0] + `</h5>      
+      <h5 class="card-title">` + names[cardData[0]] + `</h5>      
       <p class="card-text">Values</p>
       <table class="table">        
         <tr><td>Top speed</td><td>` + cardData[1] + ` km/h</td><td><button class="btn btn-info btn-sm" onclick="playAttr(1)">Play</button></td></tr>
@@ -100,7 +100,7 @@ var getCardHtmlResult = function (cardData, index) {
     <div class="card w-40">
     <img class="card-img-top" src="images/` + cardData[4] + `.jpg">
     <div class="card-body">
-      <h5 class="card-title">` + cardData[0] + `</h5>      
+      <h5 class="card-title">` + names[cardData[0]] + `</h5>      
       <p class="card-text">Values</p>
       <table class="table">        
         <tr id="result_table_row1_`+ index + `"><td>Top speed</td><td>` + cardData[1] + ` km/h</td></tr>
