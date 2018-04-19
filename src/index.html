@@ -15,38 +15,46 @@
 
 <body>
   <div class="container">
-    <h1>Welcome to <i>Top Trumps Cars</i> game DApp</h1>
+    <h1>Welcome to
+      <i>Top Trumps Cars</i> game DApp</h1>
 
-    <a id="btn_register" class="btn btn-primary" href="register.html">Register</a>
+    <div id="register_placeholder" class="row">
+      <div class="col-sm">
+        <a id="btn_register" class="btn btn-primary" href="register.html">Register as a player</a>
+      </div>
+    </div>
 
-
-    <div class="row">
+    <div id="registered_placeholder" class="row">
       <div class="col-sm">
         <h3>
           <i>Hello </i>
           <i id="player_info"></i>
         </h3>
+
+        <h5>Your cards</h5>
+        <ul id="player_cards"></ul>
+        <button class="btn btn-info" onclick="mycards()">My cards</button>
       </div>
+
     </div>
     <div class="spacer"></div>
     <div class="spacer"></div>
 
     <div class="row">
       <div class="col-sm">
-        <h5>Your cards</h5>
-        <ul id="player_cards"></ul>
-        <button class="btn btn-info" onclick="mycards()">My cards</button>
+        
         <div class="spacer"></div>
-    <div class="spacer"></div>
-        <h5>Other players</h5>
+        <div class="spacer"></div>
+
+        <h5>Players</h5>
         <table class="table">
-            <thead>
-                <tr>
-                  <th scope="col">Name</th>
-                  <th scope="col">Cards</th>
-                  <th scope="col"></th>                  
-                </tr>
-              </thead>
+          <thead>
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">Cards</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
           <tbody id="other_players">
           </tbody>
         </table>

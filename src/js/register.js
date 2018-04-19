@@ -20,7 +20,7 @@ App = {
   };
   
   var initContract = function () {
-    $.getJSON('CardFactory.json', function (data) {
+    $.getJSON('TopTrumpsCars.json', function (data) {
       // Get the necessary contract artifact file and instantiate it with truffle-contract
       var CardFactoryArtifact = data;
       App.contracts.CardFactory = TruffleContract(CardFactoryArtifact);

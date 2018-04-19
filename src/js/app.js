@@ -20,7 +20,7 @@ var initWeb3 = function () {
 };
 
 var initContract = function () {
-  $.getJSON('CardFactory.json', function (data) {
+  $.getJSON('TopTrumpsCars.json', function (data) {
     // Get the necessary contract artifact file and instantiate it with truffle-contract
     var CardFactoryArtifact = data;
     App.contracts.CardFactory = TruffleContract(CardFactoryArtifact);
@@ -66,14 +66,16 @@ var checkIfAreRegistered = function () {
   let x = App.deployed.getIsPlayerRegistered.call().then(function (result) {
     console.log("IS: " + result);
     if (result === true) {
-      $("#btn_register").hide();
+      // $("#register_placeholder").hide();
+      setRegisteredElementsVisible(false);
+
 
       App.deployed.getPlayerName.call(App.accounts[0]).then(function (result) {
         $('#player_info').text(result + "!");
 
         App.deployed.ownerCardCount(App.accounts[0]).then(function (result) {
           //$("#player_cards").text("You have " + result + " cards.");
-          
+
           player_cards.innerHTML += '<p>You have <span class="badge badge-success"> ' + result + '</span> cards</p>'
         });
 
@@ -89,7 +91,8 @@ var checkIfAreRegistered = function () {
         // });
       });
     } else {
-      $("#btn_register").show();
+      //$("#register_placeholder").show();
+      setRegisteredElementsVisible(true);
       loading(false);
     }
     //return result;
@@ -153,15 +156,27 @@ var loading = function (isLoading) {
   }
 }
 
-var mycards = function() {
+var mycards = function () {
   window.location.href = "mycards.html";
+}
+
+var setRegisteredElementsVisible = function (isRegistered) {
+  if (isRegistered) {
+    $("#register_placeholder").show();
+    $("#registered_placeholder").hide();
+  } else {
+    $("#register_placeholder").hide();
+    $("#registered_placeholder").show();
+  }
 }
 
 
 $(document).ready(function () {
   console.log("Init start.");
   initWeb3();
-  $("#btn_register").hide();
+  // $("#register_placeholder").hide();
+  setRegisteredElementsVisible(false);
+
 
   if (getAccounts()) {
     initContract();
@@ -172,11 +187,7 @@ $(document).ready(function () {
 
   // initContract();
   //getAccounts();
-
-
-
-
-
   console.log("Init ready.");
+
 
 });

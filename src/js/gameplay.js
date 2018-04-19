@@ -19,7 +19,7 @@ var initWeb3 = function () {
 };
 
 var initContract = function () {
-    $.getJSON('CardFactory.json', function (data) {
+    $.getJSON('TopTrumpsCars.json', function (data) {
         // Get the necessary contract artifact file and instantiate it with truffle-contract
         var CardFactoryArtifact = data;
         App.contracts.CardFactory = TruffleContract(CardFactoryArtifact);
@@ -52,8 +52,13 @@ var getOpponentAddress = function (opponentId) {
         console.log(App.accounts[0]);
         App.opponentAddress = opponentAddress;
 
-        App.deployed.getCardsByOwner(App.accounts[0]).then(function (result) {
-            var card = result[0];
+        App.deployed.getCardsByOwner(App.accounts[0]).then(function (result) {            
+            if (result.length == 0) {            
+                my_card_details.innerHTML += "<h5>You dont have any cards left to play!</h5>";
+                return;
+            }
+            // Get the last card like in contract. To make sure we compare same cards.
+            var card = result[result.length - 1];
             console.log(card);
             App.deployed.getCardDetails.call(card).then(function (result) {
                 my_card_details.innerHTML += getCardHtml(result);
@@ -115,7 +120,7 @@ var getCardHtmlResult = function (cardData, index) {
 var playAttr = function (attrId) {
     console.log(attrId);
 
-    App.deployed.playCard2(App.opponentAddress, attrId, ).then(function (result) {
+    App.deployed.playCard(App.opponentAddress, attrId, ).then(function (result) {
         for (var i = 0; i < result.logs.length; i++) {
             var log = result.logs[i];
 
@@ -135,7 +140,9 @@ var playAttr = function (attrId) {
 }
 
 var showModal = function (gameResult) {
-    var opponentCardId = gameResult.loserCardId;
+    console.log(gameResult);
+    
+    var opponentCardId = gameResult.opponentCardId;
     App.deployed.getCardDetails(opponentCardId).then(function (cardData) {
         $('#exampleModal').on('shown.bs.modal', function (e) {
             $("#modal_loader").show();
@@ -153,7 +160,6 @@ var showModal = function (gameResult) {
                 game_result.innerHTML += `
                 <p>You won!</p>
                 `
-
                 $("#result_table_row" + playAttribute + "_1").addClass("table-success");
                 $("#result_table_row" + playAttribute + "_2").addClass("table-danger");
             } else {
