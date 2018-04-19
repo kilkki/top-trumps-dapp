@@ -14,3 +14,10 @@ Gameplay
  6. After this result of the game round is show to the player
  7. Winner gets the card of the loser
 
+### Install ###
+1. Clone repo
+2. Install MetaMask for your browser
+3. Run `npm install`
+4. Start rpc or ganache
+5. Run `npm run dev`
+6. 
