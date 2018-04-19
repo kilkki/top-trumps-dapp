@@ -46,13 +46,9 @@ App = {
     }
   }
   
-  var register = function () {
-    console.log("register");
-  
+  var register = function () {  
     App.contracts.CardFactory.deployed().then(function (instance) {
       cardFactoryInstance = instance;
-  
-      console.log("Register player");
       var name = $("#nameInput").val();
       cardFactoryInstance.register(name).then(function (instance) {
           back();
@@ -66,27 +62,9 @@ App = {
   
   var checkIfAreRegistered = function () {
     let x = App.deployed.getIsPlayerRegistered.call().then(function (result) {
-      console.log("IS: " + result);
       if (result === true) {
           alert("You have already registered");
-        // App.deployed.getPlayerName.call(App.accounts[0]).then(function (result) {
-        //   $('#player_info').text("moi " + result);
-  
-        //   App.deployed.ownerCardCount(App.accounts[0]).then(function (result) {
-        //     $("#player_cards").text("You have " + result + " cards.");
-        //   });
-  
-        //   loading(false);
-        //   // App.deployed.getCardsByOwner.call(App.accounts[0]).then(function (result) {
-  
-        //   //   result.forEach(function (card) {
-  
-        //   //     App.deployed.getCardDetails.call(card).then(function (result) {
-        //   //       player_cards.innerHTML += '<li>' + result + '</li>';
-        //   //     });
-        //   //   });
-        //   // });
-        // });
+
         loading(false);
         $("#user_has_registered_element").show();
 
@@ -95,7 +73,6 @@ App = {
         $("#register_element").show();
 
       }
-      //return result;
     });
   }
   
@@ -108,18 +85,6 @@ App = {
         return sParameterName[1];
       }
     }
-  }
-  
-  var playWith = function (opponentId, opponentName) {
-    console.log(opponentId + opponentName);
-  
-    $("#modal-btn-si").on("click", function(){
-      console.log("SISIS");
-      window.location.href = "gameplay.html?opponent=" + opponentId;
-    });
-  
-    $('#modal_player_name').text(opponentName);
-    $('#confirmModal').modal('show');
   }
   
   var loading = function(isLoading) {
@@ -145,14 +110,6 @@ App = {
     } else {
       alert("Check MetaMask account!");
     }
-  
-    // initContract();
-    //getAccounts();
-  
-  
-  
-  
-  
+
     console.log("Init ready.");
-  
   });

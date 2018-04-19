@@ -64,48 +64,29 @@ var www3Ready = function () {
 
 var checkIfAreRegistered = function () {
   let x = App.deployed.getIsPlayerRegistered.call().then(function (result) {
-    console.log("IS: " + result);
     if (result === true) {
-      // $("#register_placeholder").hide();
       setRegisteredElementsVisible(false);
-
 
       App.deployed.getPlayerName.call(App.accounts[0]).then(function (result) {
         $('#player_info').text(result + "!");
-
         App.deployed.ownerCardCount(App.accounts[0]).then(function (result) {
-          //$("#player_cards").text("You have " + result + " cards.");
-
           player_cards.innerHTML += '<p>You have <span class="badge badge-success"> ' + result + '</span> cards</p>'
         });
 
         loading(false);
-        // App.deployed.getCardsByOwner.call(App.accounts[0]).then(function (result) {
-
-        //   result.forEach(function (card) {
-
-        //     App.deployed.getCardDetails.call(card).then(function (result) {
-        //       player_cards.innerHTML += '<li>' + result + '</li>';
-        //     });
-        //   });
-        // });
       });
     } else {
-      //$("#register_placeholder").show();
       setRegisteredElementsVisible(true);
       loading(false);
     }
-    //return result;
   });
 
   App.deployed.getPlayers.call().then(function (result) {
 
     result.forEach(function (player) {
-      console.log("plrs:  " + player);
       if (player != App.accounts[0]) {
         App.deployed.playerId(player).then(function (result) {
           var playerId = result;
-
 
           App.deployed.getPlayerName.call(player).then(function (result) {
             var opponentName = result;
@@ -115,13 +96,9 @@ var checkIfAreRegistered = function () {
                 `<button class="btn btn-info btn-sm" onclick="playWith(` + playerId + `,'` + opponentName + `')">Play with</button></td></tr>`;
             });
           });
-
-
         });
-
       }
     });
-
   });
 }
 
@@ -137,10 +114,7 @@ var GetURLParameter = function (sParam) {
 }
 
 var playWith = function (opponentId, opponentName) {
-  console.log(opponentId + opponentName);
-
   $("#modal-btn-si").on("click", function () {
-    console.log("SISIS");
     window.location.href = "gameplay.html?opponent=" + opponentId;
   });
 
@@ -174,9 +148,7 @@ var setRegisteredElementsVisible = function (isRegistered) {
 $(document).ready(function () {
   console.log("Init start.");
   initWeb3();
-  // $("#register_placeholder").hide();
   setRegisteredElementsVisible(false);
-
 
   if (getAccounts()) {
     initContract();
@@ -184,10 +156,4 @@ $(document).ready(function () {
   } else {
     alert("Check MetaMask account!");
   }
-
-  // initContract();
-  //getAccounts();
-  console.log("Init ready.");
-
-
 });

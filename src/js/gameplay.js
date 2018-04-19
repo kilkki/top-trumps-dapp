@@ -99,7 +99,6 @@ var getCardHtml = function (cardData) {
     `
 }
 
-
 var getCardHtmlResult = function (cardData, index) {
     return `
     <div class="card w-40">
@@ -118,30 +117,18 @@ var getCardHtmlResult = function (cardData, index) {
 }
 
 var playAttr = function (attrId) {
-    console.log(attrId);
-
     App.deployed.playCard(App.opponentAddress, attrId, ).then(function (result) {
         for (var i = 0; i < result.logs.length; i++) {
             var log = result.logs[i];
 
             if (log.event == "PlayResult") {
-                // We found the event!
-                console.log("PLAY RES");
-                console.log(log.args);
-                //iWon = log.args.iWon;
-                //opponentCardId = log.args.loserCardId;
-                console.log(log);
-
                 showModal(log.args);
-                //break;
             }
         }
     });
 }
 
-var showModal = function (gameResult) {
-    console.log(gameResult);
-    
+var showModal = function (gameResult) {    
     var opponentCardId = gameResult.opponentCardId;
     App.deployed.getCardDetails(opponentCardId).then(function (cardData) {
         $('#exampleModal').on('shown.bs.modal', function (e) {
@@ -156,14 +143,12 @@ var showModal = function (gameResult) {
             var playAttribute = gameResult.playAttribute;
 
             if (gameResult.iWon) {
-                console.log("WON");
                 game_result.innerHTML += `
                 <p>You won!</p>
                 `
                 $("#result_table_row" + playAttribute + "_1").addClass("table-success");
                 $("#result_table_row" + playAttribute + "_2").addClass("table-danger");
             } else {
-                console.log("LOSt");
                 game_result.innerHTML += `
                 <p>You lose!</p>            
                 `
@@ -192,7 +177,6 @@ $(document).ready(function () {
     } else {
         alert("Check MetaMask account!");
     }
-
 
     console.log("Init ready.");
 });

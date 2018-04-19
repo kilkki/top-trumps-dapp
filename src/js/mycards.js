@@ -46,18 +46,6 @@ var getAccounts = function () {
     }
 }
 
-var register = function () {
-    console.log("register");
-
-    App.contracts.CardFactory.deployed().then(function (instance) {
-        cardFactoryInstance = instance;
-
-        console.log("Register player");
-        var name = $("#nameInput").val();
-        return cardFactoryInstance.register(name);
-    })
-}
-
 var www3Ready = function () {
      getMyCards();
 }
@@ -70,7 +58,6 @@ var getMyCards = function () {
             });
 
             loading(false);
-
         });
     });
     loading(false);
@@ -106,18 +93,6 @@ var GetURLParameter = function (sParam) {
     }
 }
 
-var playWith = function (opponentId, opponentName) {
-    console.log(opponentId + opponentName);
-
-    $("#modal-btn-si").on("click", function () {
-        console.log("SISIS");
-        window.location.href = "gameplay.html?opponent=" + opponentId;
-    });
-
-    $('#modal_player_name').text(opponentName);
-    $('#confirmModal').modal('show');
-}
-
 var loading = function (isLoading) {
     if (isLoading) {
         $("#loader").show();
@@ -141,14 +116,5 @@ $(document).ready(function () {
     } else {
         alert("Check MetaMask account!");
     }
-
-    // initContract();
-    //getAccounts();
-
-
-
-
-
     console.log("Init ready.");
-
 });
