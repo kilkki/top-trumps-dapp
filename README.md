@@ -21,8 +21,9 @@ Gameplay
 2. Install MetaMask for your browser
 3. Run `npm install`
 4. Start rpc or ganache. (Change the network address accordingly in truffle.js)
-5. Run `npm run dev`
-6. Open browser to localhost if previous command didn't automatically
+5. Compile and migrate contract `truffle compile && truffle migrate`
+6. Run `npm run dev`
+7. Open browser to localhost if previous command didn't automatically
 
 ### Todo ###
 * Use frontend framework like angular
