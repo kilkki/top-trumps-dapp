@@ -1,7 +1,6 @@
 pragma solidity ^0.4.16;
 import "./PlayerService.sol";
 
-
 contract PlayerService {
     mapping (address => string) public playerName;
     mapping (address => uint) public playerId;
@@ -9,7 +8,6 @@ contract PlayerService {
     address[] public players;
 
     function getIsPlayerRegistered() public view returns (bool) {
-        // uint counter = 0;
         bool isRegistered = false;
 
         for (uint i = 0; i < players.length; i++) {
@@ -24,12 +22,8 @@ contract PlayerService {
         return playerName[_playerAddress];
     }
 
-  
-
     // Retrieving the players
 	function getPlayers() public view returns (address[]) {
 	    return players;
 	}
-
-    
 }

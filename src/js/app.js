@@ -27,8 +27,8 @@ var initContract = function () {
 
     // Set the provider for our contract
     App.contracts.CardFactory.setProvider(App.web3Provider);
-
-    App.contracts.CardFactory.deployed().then(function (instance) {
+    
+    App.contracts.CardFactory.deployed().then(function (instance) {      
       return instance;
     }).then(function (instance) {
       App.deployed = instance;
@@ -147,9 +147,9 @@ var setRegisteredElementsVisible = function (isRegistered) {
 
 $(document).ready(function () {
   console.log("Init start.");
+  
   initWeb3();
-  setRegisteredElementsVisible(false);
-
+  
   if (getAccounts()) {
     initContract();
     $("#your_address").text(App.accounts[0]);

@@ -9,6 +9,8 @@ App = {
 }
 
 var initWeb3 = function () {
+    loading(true);
+
     if (typeof web3 !== 'undefined') {
         App.web3Provider = web3.currentProvider;
     } else {
@@ -63,6 +65,8 @@ var getOpponentAddress = function (opponentId) {
             App.deployed.getCardDetails.call(card).then(function (result) {
                 my_card_details.innerHTML += getCardHtml(result);
                 my_card_details_modal.innerHTML += getCardHtmlResult(result, 1);
+
+                loading(false);
             });
         });
     });
@@ -117,12 +121,16 @@ var getCardHtmlResult = function (cardData, index) {
 }
 
 var playAttr = function (attrId) {
+    loading(true);
+
     App.deployed.playCard(App.opponentAddress, attrId, ).then(function (result) {
         for (var i = 0; i < result.logs.length; i++) {
             var log = result.logs[i];
 
             if (log.event == "PlayResult") {
                 showModal(log.args);
+                loading(false);
+
             }
         }
     });
@@ -160,6 +168,14 @@ var showModal = function (gameResult) {
         $('#exampleModal').modal('show');
     });
 }
+
+var loading = function (isLoading) {
+    if (isLoading) {
+      $("#loader").show();
+    } else {
+      $("#loader").hide();
+    }
+  }
 
 var back = function () {
     window.location.href = "index.html";

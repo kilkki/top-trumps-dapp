@@ -47,11 +47,6 @@ contract CardFactory is PlayerService {
     return _getCardsByOwner(_owner);
   }
 
-  modifier ownerOf(uint _cardId) {
-    require(msg.sender == cardToOwner[_cardId]);
-    _;
-  }
-
   function _getCardsByOwner(address _owner) private view returns(uint[]) {
     uint[] memory result = new uint[](ownerCardCount[_owner]);
     uint counter = 0;
