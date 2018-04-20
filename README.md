@@ -20,6 +20,12 @@ Gameplay
 1. Clone repo
 2. Install MetaMask for your browser
 3. Run `npm install`
-4. Start rpc or ganache
+4. Start rpc or ganache. (Change the network address accordingly in truffle.js)
 5. Run `npm run dev`
-6. 
+6. Open browser to localhost if previous command didn't automatically
+
+### Todo ###
+* Use frontend framework like angular
+* Clean up code
+* Add error checks to frontend
+* Wish there was more hours in a day than 24
